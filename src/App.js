@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
@@ -13,9 +13,11 @@ function App() {
       ...repositories,
       {id: repositories.length + 1, name: `repo-${repositories.length + 1}`}
     ])
-
-    console.log(repositories[repositories.length - 1])
   }
+
+  useEffect(() => {
+    console.log(repositories[repositories.length - 1])
+  }, [repositories])
 
   return (
    <>
