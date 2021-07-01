@@ -1,39 +1,55 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import './App.css'
 
 function App() {
-  const [repositories, setRepositories] = useState([
-    {id: 1, name: 'repo-1'},
-    {id: 2, name: 'repo-2'},
-    {id: 3, name: 'repo-3'}
-  ])
+  const [repositories, setRepositories] = useState([])
 
-  function handleAddRepository() {
-    setRepositories([
-      ...repositories,
-      {id: repositories.length + 1, name: `repo-${repositories.length + 1}`}
-    ])
-  }
+  const API = 'https://api.github.com/users/nand0diaz/repos'
 
   useEffect(() => {
-    console.log(repositories[repositories.length - 1])
+    axios.get(API)
+      .then(response => setRepositories(response.data))
+  }, [])
+
+  useEffect(() => {
+    const filteredFavorites = repositories.filter(element => element.favorite)
+
+    document.title = `You got ${filteredFavorites.length} favorite repositories`
   }, [repositories])
 
+  const handleFavorite = id => {
+    const newRepositories = repositories.map(element => {
+      return element.id === id ? {
+        ...element, favorite: !element.favorite
+      } : element
+    })
+
+    setRepositories(newRepositories)
+  }
+
   return (
-   <>
-    <ul className="list-group">
-      {repositories.map(element => {
-        return (
-        <li className="list-group-item" key={element.id}>
-          {element.name}
-        </li>
-        )
-      })}
-    </ul>
-    <button className='btn btn-primary' onClick={handleAddRepository}>
-      Add repository
-    </button>
-   </>
+    <>
+      {console.log(repositories)}
+      <ul className="list-group">
+        {repositories.map(element => {
+          return (
+            <li className="list-group-item" key={element.id}>
+              {element.name} {element.favorite && <span>(favorite)</span>} <br/>
+
+              <button
+                type='button'
+                className='btn btn-secondary'
+                style={{marginTop: '5px'}}
+                onClick={() => handleFavorite(element.id)}>
+                  {element.favorite ? 'Remove favorite' : 'Favorite'}
+              </button>
+              
+            </li>
+          )
+        })}
+      </ul>
+    </>
   )
 }
 
