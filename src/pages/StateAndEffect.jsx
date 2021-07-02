@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import './App.css'
+import styled from 'styled-components'
 
-function App() {
+export function StateAndEffect() {
   const [repositories, setRepositories] = useState([])
 
   const API = 'https://api.github.com/users/nand0diaz/repos'
@@ -30,21 +30,19 @@ function App() {
 
   return (
     <>
-      {console.log(repositories)}
+      <StyledH3>GitHub Repositories</StyledH3>
       <ul className="list-group">
         {repositories.map(element => {
           return (
             <li className="list-group-item" key={element.id}>
-              {element.name} {element.favorite && <span>(favorite)</span>} <br/>
-
-              <button
+              {element.name} {element.favorite && <span>(favorite)</span>} <br />
+              <Button
                 type='button'
                 className='btn btn-secondary'
-                style={{marginTop: '5px'}}
-                onClick={() => handleFavorite(element.id)}>
-                  {element.favorite ? 'Remove favorite' : 'Favorite'}
-              </button>
-              
+                onClick={() => handleFavorite(element.id)}
+              >
+                {element.favorite ? 'Remove favorite' : 'Favorite'}
+              </Button>
             </li>
           )
         })}
@@ -53,4 +51,11 @@ function App() {
   )
 }
 
-export default App
+const StyledH3 = styled.h3`
+  margin-left: 5px;
+`
+
+const Button = styled.button`
+  margin-top: 5px;
+`
+
