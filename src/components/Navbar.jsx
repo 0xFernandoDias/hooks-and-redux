@@ -28,6 +28,9 @@ export function Navbar() {
                         <li className="nav-item">
                             <Link className="nav-link" to='reducer'>Reducer</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to='redux'>Redux</Link>
+                        </li>
                     </ul>
                 </Container>
             </nav>

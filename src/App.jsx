@@ -12,6 +12,7 @@ import { Reducer } from "./pages/Reducer"
 import { Ref } from "./pages/Ref"
 import { State } from "./pages/State"
 import { StateAndEffect } from "./pages/StateAndEffect"
+import { Redux } from "./pages/Redux"
 
 function App() {
     return (
@@ -35,6 +36,9 @@ function App() {
                 </Route>
                 <Route path='/reducer'>
                     <Reducer />
+                </Route>
+                <Route path='/redux'>
+                    <Redux />
                 </Route>
                 <Route path="/">
                     <Home />
